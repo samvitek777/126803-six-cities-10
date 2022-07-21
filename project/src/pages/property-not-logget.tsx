@@ -4,15 +4,19 @@ function PropertyNotLogged(): JSX.Element {
       <div style={{display: 'none'}}>
         <svg xmlns="http://www.w3.org/2000/svg">
           <symbol id="icon-arrow-select" viewBox="0 0 7 4">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0l3.5 2.813L7 0v1.084L3.5 4 0 1.084V0z"></path>
+            <path fillRule="evenodd" clipRule="evenodd" d="M0 0l3.5 2.813L7 0v1.084L3.5 4 0 1.084V0z"></path>
           </symbol>
           <symbol id="icon-bookmark" viewBox="0 0 17 18">
             <path
-              d="M3.993 2.185l.017-.092V2c0-.554.449-1 .99-1h10c.522 0 .957.41.997.923l-2.736 14.59-4.814-2.407-.39-.195-.408.153L1.31 16.44 3.993 2.185z"></path>
+              d="M3.993 2.185l.017-.092V2c0-.554.449-1 .99-1h10c.522 0 .957.41.997.923l-2.736 14.59-4.814-2.407-.39-.195-.408.153L1.31 16.44 3.993 2.185z"
+            >
+            </path>
           </symbol>
           <symbol id="icon-star" viewBox="0 0 13 12">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"></path>
+            <path fillRule="evenodd" clipRule="evenodd"
+              d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"
+            >
+            </path>
           </symbol>
         </svg>
       </div>
@@ -143,14 +147,15 @@ function PropertyNotLogged(): JSX.Element {
                   <div className="property__host-user user">
                     <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
                       <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74"
-                           height="74" alt="Host avatar"/>
+                        height="74" alt="Host avatar"
+                      />
                     </div>
                     <span className="property__user-name">
                     Angelina
-                  </span>
+                    </span>
                     <span className="property__user-status">
                     Pro
-                  </span>
+                    </span>
                   </div>
                   <div className="property__description">
                     <p className="property__text">
@@ -170,11 +175,12 @@ function PropertyNotLogged(): JSX.Element {
                       <div className="reviews__user user">
                         <div className="reviews__avatar-wrapper user__avatar-wrapper">
                           <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54"
-                               alt="Reviews avatar"/>
+                            alt="Reviews avatar"
+                          />
                         </div>
                         <span className="reviews__user-name">
                         Max
-                      </span>
+                        </span>
                       </div>
                       <div className="reviews__info">
                         <div className="reviews__rating rating">
@@ -213,7 +219,8 @@ function PropertyNotLogged(): JSX.Element {
                         <span className="place-card__price-text">&#47;&nbsp;night</span>
                       </div>
                       <button className="place-card__bookmark-button place-card__bookmark-button--active button"
-                              type="button">
+                        type="button"
+                      >
                         <svg className="place-card__bookmark-icon" width="18" height="19">
                           <use href="#icon-bookmark"></use>
                         </svg>
@@ -237,7 +244,8 @@ function PropertyNotLogged(): JSX.Element {
                   <div className="near-places__image-wrapper place-card__image-wrapper">
                     <a href="#">
                       <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200"
-                           alt="Place image"/>
+                        alt="Place image"
+                      />
                     </a>
                   </div>
                   <div className="place-card__info">
@@ -273,7 +281,8 @@ function PropertyNotLogged(): JSX.Element {
                   <div className="near-places__image-wrapper place-card__image-wrapper">
                     <a href="#">
                       <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200"
-                           alt="Place image"/>
+                        alt="Place image"
+                      />
                     </a>
                   </div>
                   <div className="place-card__info">
