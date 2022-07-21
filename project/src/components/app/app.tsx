@@ -1,5 +1,5 @@
-import MainScreen from "../../pages/main";
-import * as React from "react";
+import MainScreen from '../../pages/main';
+import * as React from 'react';
 
 type AppProps = {
   placesCount: number;
