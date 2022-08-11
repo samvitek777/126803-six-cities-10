@@ -6,18 +6,20 @@ import Property from '../../pages/property';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../../pages/not-found-screen';
+import {Offers} from '../../types/offers';
 
 type AppProps = {
   placesCount: number;
+  offers: Offers;
 }
 
-function App({placesCount}: AppProps): JSX.Element {
+function App({placesCount, offers}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainScreen placesCount={placesCount}/>}
+          element={<MainScreen placesCount={placesCount} offers={offers}/>}
         />
         <Route
           path={AppRoute.Login}
@@ -33,7 +35,7 @@ function App({placesCount}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<Property/>}
+          element={<Property offers={offers}/>}
         />
         <Route
           path="*"
