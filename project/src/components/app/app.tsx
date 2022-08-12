@@ -6,20 +6,22 @@ import Property from '../../pages/property';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../../pages/not-found-screen';
-import {Offers} from '../../types/offers';
+import {CityPoint, Offers, Points} from '../../types/offers';
 
 type AppProps = {
   placesCount: number;
   offers: Offers;
+  points: Points;
+  cityPoint: CityPoint;
 }
 
-function App({placesCount, offers}: AppProps): JSX.Element {
+function App({placesCount, offers, points, cityPoint}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainScreen placesCount={placesCount} offers={offers}/>}
+          element={<MainScreen placesCount={placesCount} offers={offers} points={points} cityPoint={cityPoint}/>}
         />
         <Route
           path={AppRoute.Login}
