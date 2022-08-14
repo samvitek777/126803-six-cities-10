@@ -2,7 +2,7 @@ import {Icon, Marker} from 'leaflet';
 import {useEffect, useRef} from 'react';
 import useMap from '../../hooks/useMap';
 import 'leaflet/dist/leaflet.css';
-import {CityPoint, Points} from '../../types/offers';
+import {City, Points} from '../../types/offers';
 
 const defaultCustomIcon = new Icon({
   iconUrl: '/img/pin.svg',
@@ -11,7 +11,7 @@ const defaultCustomIcon = new Icon({
 });
 
 type MapProps = {
-  city: CityPoint,
+  city: City,
   points: Points
 }
 
@@ -24,8 +24,8 @@ function Map({city, points}: MapProps): JSX.Element {
     if (map) {
       points.forEach((point) => {
         const marker = new Marker({
-          lat: point.lat,
-          lng: point.lng
+          lat: point.latitude,
+          lng: point.longitude
         });
 
         marker

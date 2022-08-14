@@ -1,16 +1,20 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
+import ReviewsList from '../reviews-list/reviews-list';
+import {User} from '../../types/comment';
+import {comments} from '../../mocks/comments';
 
 function MessageForm(): JSX.Element {
+  const user : User = {
+    'id': 18,
+    'isPro': true,
+    'name': 'Sophie',
+    'avatarUrl': 'https://10.react.pages.academy/static/avatar/9.jpg'
+  };
   const [formData, setFormData] = useState({
     rating: 0,
     review: ''
   });
-  const [messages, setMessages] = useState([{
-    userName: 'Max',
-    rating: 0,
-    message: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.\n' +
-      '              The building is green and from 18th century.'
-  }]);
+  const [messages, setMessages] = useState(comments);
   const updateStateHandle = (evt: ChangeEvent) => {
     const target = evt.target as HTMLInputElement;
     const {name, value} = target;
@@ -18,40 +22,12 @@ function MessageForm(): JSX.Element {
   };
   const submitHandle = (evt: FormEvent) => {
     evt.preventDefault();
-    setMessages([...messages, {userName: 'test', rating: formData.rating, message: formData.review}]);
+    setMessages([...messages, {id: 1, user: user, rating: formData.rating, comment: formData.review, date: '2022-05-25T12:25:36.939Z'}]);
   };
   return (
     <section className="property__reviews reviews">
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-      <ul className="reviews__list">
-        {messages.map((message) => (
-          <li className="reviews__item" key={message.userName}>
-            <div className="reviews__user user">
-              <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54"
-                  alt="Reviews avatar"
-                />
-              </div>
-              <span className="reviews__user-name">
-                {message.userName}
-              </span>
-            </div>
-            <div className="reviews__info">
-              <div className="reviews__rating rating">
-                <div className="reviews__stars rating__stars">
-                  <span style={{width: '80'}}></span>
-                  <span className="visually-hidden">Rating</span>
-                </div>
-              </div>
-              <p className="reviews__text">
-                {message.message}
-              </p>
-              <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-            </div>
-          </li>
-        )
-        )}
-      </ul>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{messages.length}</span></h2>
+      <ReviewsList comments={messages}/>
       <form className="reviews__form form" action="#" method="post" onSubmit={submitHandle}>
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">

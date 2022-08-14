@@ -2,26 +2,24 @@ import MainScreen from '../../pages/main';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Login from '../../pages/login';
 import Favorites from '../../pages/favorites';
-import Property from '../../pages/property';
+import Room from '../../pages/room';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../../pages/not-found-screen';
-import {CityPoint, Offers, Points} from '../../types/offers';
+import {Offers} from '../../types/offers';
 
 type AppProps = {
   placesCount: number;
   offers: Offers;
-  points: Points;
-  cityPoint: CityPoint;
 }
 
-function App({placesCount, offers, points, cityPoint}: AppProps): JSX.Element {
+function App({placesCount, offers}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainScreen placesCount={placesCount} offers={offers} points={points} cityPoint={cityPoint}/>}
+          element={<MainScreen placesCount={placesCount} offers={offers}/>}
         />
         <Route
           path={AppRoute.Login}
@@ -37,7 +35,7 @@ function App({placesCount, offers, points, cityPoint}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<Property offers={offers}/>}
+          element={<Room offers={offers}/>}
         />
         <Route
           path="*"
