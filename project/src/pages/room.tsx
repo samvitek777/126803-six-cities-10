@@ -1,4 +1,4 @@
-import {Offers, Offer, Points} from '../types/offers';
+import {Offers, Offer, Points, City} from '../types/offers';
 import {useParams} from 'react-router-dom';
 import MessageForm from '../components/message-form/message-form';
 import OfferList from '../components/offer-list/offer-list';
@@ -11,10 +11,9 @@ type PropertyProps = {
 
 function Room({offers}: PropertyProps): JSX.Element {
   const { id } = useParams();
-  const offer : Offer | undefined = offers.find((x) => x.id === Number(id));
-  const city = offer?.city;
-  const points : Points = [];
-  nearby.forEach((near) => points.push(near.location));
+  const offer : Offer | undefined = offers.find((element) => element.id === Number(id));
+  const city = offer?.city as City;
+  const points : Points = nearby.map((near) => near.location);
   return (
     <>
       <div style={{display: 'none'}}>
@@ -156,7 +155,7 @@ function Room({offers}: PropertyProps): JSX.Element {
               </div>
             </div>
             <section className="property__map map">
-              <Map points={points} city={city!}></Map>
+              <Map points={points} city={city}></Map>
             </section>
           </section>
           <div className="container">

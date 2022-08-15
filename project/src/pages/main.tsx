@@ -10,8 +10,7 @@ type MainScreenProps = {
 function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
   const offersAmsterdam : Offers | undefined = offers.filter((offer) => offer.city.name === 'Amsterdam');
   const cityAmsterdam : City = offersAmsterdam[0].city;
-  const pointsAmsterdam : Points = [];
-  offersAmsterdam.forEach((amsterdam) => pointsAmsterdam.push(amsterdam.location));
+  const pointsAmsterdam : Points = offersAmsterdam.map((amsterdam) => amsterdam.location);
   return (
     <>
       <div style={{display: 'none'}}>
