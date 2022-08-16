@@ -1,9 +1,10 @@
-import {Offers, Offer, Points, City} from '../types/offers';
+import {Offers, Offer, City} from '../types/offers';
 import {useParams} from 'react-router-dom';
 import MessageForm from '../components/message-form/message-form';
 import OfferList from '../components/offer-list/offer-list';
 import {nearby} from '../mocks/nearby';
 import Map from '../components/map/map';
+import {useState} from 'react';
 
 type PropertyProps = {
   offers: Offers;
@@ -13,7 +14,7 @@ function Room({offers}: PropertyProps): JSX.Element {
   const { id } = useParams();
   const offer : Offer | undefined = offers.find((element) => element.id === Number(id));
   const city = offer?.city as City;
-  const points : Points = nearby.map((near) => near.location);
+  const [mouseFocusId, setMouseFocusId] = useState(0);
   return (
     <>
       <div style={{display: 'none'}}>
@@ -155,14 +156,14 @@ function Room({offers}: PropertyProps): JSX.Element {
               </div>
             </div>
             <section className="property__map map">
-              <Map points={points} city={city}></Map>
+              <Map city={city} offers={offers} selectedCardId={mouseFocusId}></Map>
             </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-                <OfferList offers={nearby}/>
+                <OfferList offers={nearby} setMouseFocusId={setMouseFocusId}/>
               </div>
             </section>
           </div>

@@ -1,14 +1,12 @@
 import {Offers} from '../../types/offers';
 import Card from '../card/card';
-import {useState} from 'react';
 
 type OfferListProps = {
   offers: Offers;
+  setMouseFocusId: (state: number) => void;
 }
 
-function OfferList({offers} : OfferListProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [mouseFocusId, setMouseFocusId] = useState(0);
+function OfferList({offers, setMouseFocusId} : OfferListProps): JSX.Element {
   return (
     <>
       {offers.map((offer ) => <Card key={offer.id} offer={offer} setMouseFocusId={setMouseFocusId}/>)}

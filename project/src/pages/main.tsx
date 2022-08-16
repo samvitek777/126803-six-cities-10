@@ -1,16 +1,19 @@
-import {City, Offers, Points} from '../types/offers';
+import {City, Offers} from '../types/offers';
 import OfferList from '../components/offer-list/offer-list';
 import Map from '../components/map/map';
+import {useAppDispatch, useAppSelector} from '../hooks';
+import ListCities from '../components/list-cities/list-cities';
+import {useEffect, useState} from 'react';
+import {getHotelsByName} from '../store/action';
 
-type MainScreenProps = {
-  placesCount: number;
-  offers: Offers;
-}
-
-function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
-  const offersAmsterdam : Offers | undefined = offers.filter((offer) => offer.city.name === 'Amsterdam');
-  const cityAmsterdam : City = offersAmsterdam[0].city;
-  const pointsAmsterdam : Points = offersAmsterdam.map((amsterdam) => amsterdam.location);
+function MainScreen(): JSX.Element {
+  const offers : Offers = useAppSelector((state) => state.offers);
+  const city : City = offers[0].city;
+  const dispatch = useAppDispatch();
+  const [mouseFocusId, setMouseFocusId] = useState(0);
+  useEffect(() => {
+    dispatch(getHotelsByName({cityName : 'Paris'}));
+  }, []);
   return (
     <>
       <div style={{display: 'none'}}>
@@ -66,46 +69,13 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
-            <section className="locations container">
-              <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Paris</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Cologne</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Brussels</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active">
-                    <span>Amsterdam</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Hamburg</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Dusseldorf</span>
-                  </a>
-                </li>
-              </ul>
-            </section>
+            <ListCities dispatch={dispatch} activeCity={city}/>
           </div>
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+                <b className="places__found">{offers.length} places to stay in {city.name}</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex={0}>
@@ -122,12 +92,12 @@ function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">
-                  <OfferList offers={offersAmsterdam}/>
+                  <OfferList offers={offers} setMouseFocusId={setMouseFocusId}/>
                 </div>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map points={pointsAmsterdam} city={cityAmsterdam}></Map>
+                  <Map city={city} offers={offers} selectedCardId={mouseFocusId}></Map>
                 </section>
               </div>
             </div>
