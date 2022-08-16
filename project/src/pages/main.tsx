@@ -3,17 +3,18 @@ import OfferList from '../components/offer-list/offer-list';
 import Map from '../components/map/map';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import ListCities from '../components/list-cities/list-cities';
-import {useEffect, useState} from 'react';
-import {getHotelsByName} from '../store/action';
+import {useState} from 'react';
+import {getActiveCity} from '../store/action';
 
 function MainScreen(): JSX.Element {
-  const offers : Offers = useAppSelector((state) => state.offers);
+  const activeCity : string = useAppSelector((state) => state.activeCity);
+  const offers : Offers = useAppSelector((state) => state.offers).filter((offer) => offer.city.name === activeCity);
   const city : City = offers[0].city;
   const dispatch = useAppDispatch();
   const [mouseFocusId, setMouseFocusId] = useState(0);
-  useEffect(() => {
-    dispatch(getHotelsByName({cityName : 'Paris'}));
-  }, []);
+  function setSelectedCityHandler(cityName: string){
+    dispatch(getActiveCity(cityName));
+  }
   return (
     <>
       <div style={{display: 'none'}}>
@@ -69,7 +70,7 @@ function MainScreen(): JSX.Element {
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
-            <ListCities dispatch={dispatch} activeCity={city}/>
+            <ListCities setSelectedCityHandler={setSelectedCityHandler} activeCity={city}/>
           </div>
           <div className="cities">
             <div className="cities__places-container container">
