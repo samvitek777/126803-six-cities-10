@@ -1,10 +1,15 @@
 import {offers} from '../mocks/offers';
 import {createReducer} from '@reduxjs/toolkit';
-import {filterPriceHighToLow, filterPriceLowToHigh, filterTopRatedFirst, getActiveCity, getHotels} from './action';
+import {
+  getActiveCity,
+  getActiveFilter,
+  getHotels
+} from './action';
 
 const initialState = {
   offers,
-  activeCity: 'Paris'
+  activeCity: 'Paris',
+  activeFilter: 'Popular'
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -15,17 +20,8 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(getActiveCity, (state, action) => {
       state.activeCity = action.payload;
     })
-    .addCase(filterPriceLowToHigh, (state) => {
-      const offersCopy = [...offers];
-      state.offers = offersCopy.sort((a, b) => (a.price - b.price));
-    })
-    .addCase(filterPriceHighToLow, (state) => {
-      const offersCopy = [...offers];
-      state.offers = offersCopy.sort((a, b) => (b.price - a.price));
-    })
-    .addCase(filterTopRatedFirst, (state) => {
-      const offersCopy = [...offers];
-      state.offers = offersCopy.sort((a, b) => (b.rating - a.rating));
+    .addCase(getActiveFilter, (state, action) => {
+      state.activeFilter = action.payload;
     });
 });
 

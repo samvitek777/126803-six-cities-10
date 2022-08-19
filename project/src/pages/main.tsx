@@ -11,6 +11,17 @@ function MainScreen(): JSX.Element {
   const activeCity : string = useAppSelector((state) => state.activeCity);
   const offers : Offers = useAppSelector((state) => state.offers);
   const offersActiveCity : Offers = offers.filter((offer) => offer.city.name === activeCity);
+  switch (useAppSelector((state) => state.activeFilter)){
+    case 'PriceLowToHigh':
+      offersActiveCity.sort((a, b) => (a.price - b.price));
+      break;
+    case 'PriceHighToLow':
+      offersActiveCity.sort((a, b) => (b.price - a.price));
+      break;
+    case 'TopRatedFirst':
+      offersActiveCity.sort((a, b) => (b.rating - a.rating));
+      break;
+  }
   const city : City = offersActiveCity[0].city;
   const dispatch = useAppDispatch();
   const [mouseFocusId, setMouseFocusId] = useState(0);

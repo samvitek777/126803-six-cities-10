@@ -1,14 +1,12 @@
+import {getActiveFilter} from '../../store/action';
 import {useAppDispatch} from '../../hooks';
-import {filterPriceHighToLow, filterPriceLowToHigh, filterTopRatedFirst, getHotels} from '../../store/action';
-
 
 function SortOptions() : JSX.Element {
   const dispatch = useAppDispatch();
-  const setSelectedFilterPopular = () => {dispatch(getHotels());};
-  const setSelectedFilterPriceLowToHigh = () => {dispatch(filterPriceLowToHigh());};
-  const setSelectedFilterPriceHighToLow = () => {dispatch(filterPriceHighToLow());};
-  const setSelectedFilterTopRatedFirst = () => {dispatch(filterTopRatedFirst());};
-
+  const setSelectedFilterPopular = () => {dispatch(getActiveFilter('Popular'));};
+  const setSelectedFilterPriceLowToHigh = () => {dispatch(getActiveFilter('PriceLowToHigh'));};
+  const setSelectedFilterPriceHighToLow = () => {dispatch(getActiveFilter('PriceHighToLow'));};
+  const setSelectedFilterTopRatedFirst = () => {dispatch(getActiveFilter('TopRatedFirst'));};
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by </span>
