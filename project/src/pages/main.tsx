@@ -5,16 +5,19 @@ import {useAppDispatch, useAppSelector} from '../hooks';
 import ListCities from '../components/list-cities/list-cities';
 import {useState} from 'react';
 import {getActiveCity} from '../store/action';
+import SortOptions from '../components/sort-options/sort-options';
+import filterSort from '../functions/filter';
 
 function MainScreen(): JSX.Element {
   const activeCity : string = useAppSelector((state) => state.activeCity);
-  const offers : Offers = useAppSelector((state) => state.offers).filter((offer) => offer.city.name === activeCity);
-  const city : City = offers[0].city;
+  const activeFilter : string = useAppSelector((state) => state.activeFilter);
+  const offers : Offers = useAppSelector((state) => state.offers);
+  const offersActiveCity : Offers = offers.filter((offer) => offer.city.name === activeCity);
+  filterSort(offersActiveCity, activeFilter);
+  const city : City = offersActiveCity[0].city;
   const dispatch = useAppDispatch();
   const [mouseFocusId, setMouseFocusId] = useState(0);
-  function setSelectedCityHandler(cityName: string){
-    dispatch(getActiveCity(cityName));
-  }
+  const setSelectedCityHandler = (cityName: string) => {dispatch(getActiveCity(cityName));};
   return (
     <>
       <div style={{display: 'none'}}>
@@ -76,29 +79,15 @@ function MainScreen(): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} places to stay in {city.name}</b>
-                <form className="places__sorting" action="#" method="get">
-                  <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                    <svg className="places__sorting-arrow" width="7" height="4">
-                      <use href="#icon-arrow-select"></use>
-                    </svg>
-                  </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                    <li className="places__option" tabIndex={0}>Price: low to high</li>
-                    <li className="places__option" tabIndex={0}>Price: high to low</li>
-                    <li className="places__option" tabIndex={0}>Top rated first</li>
-                  </ul>
-                </form>
+                <b className="places__found">{offersActiveCity.length} places to stay in {city.name}</b>
+                <SortOptions activeFilter={activeFilter}/>
                 <div className="cities__places-list places__list tabs__content">
-                  <OfferList offers={offers} setMouseFocusId={setMouseFocusId}/>
+                  <OfferList offers={offersActiveCity} setMouseFocusId={setMouseFocusId}/>
                 </div>
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map city={city} offers={offers} selectedCardId={mouseFocusId}></Map>
+                  <Map city={city} offers={offersActiveCity} selectedCardId={mouseFocusId}></Map>
                 </section>
               </div>
             </div>

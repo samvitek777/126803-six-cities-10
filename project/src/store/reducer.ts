@@ -1,10 +1,15 @@
 import {offers} from '../mocks/offers';
 import {createReducer} from '@reduxjs/toolkit';
-import {getActiveCity, getHotels} from './action';
+import {
+  getActiveCity,
+  getActiveFilter,
+  getHotels
+} from './action';
 
 const initialState = {
   offers,
-  activeCity: 'Paris'
+  activeCity: 'Paris',
+  activeFilter: 'Popular'
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -14,6 +19,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(getActiveCity, (state, action) => {
       state.activeCity = action.payload;
+    })
+    .addCase(getActiveFilter, (state, action) => {
+      state.activeFilter = action.payload;
     });
 });
 
