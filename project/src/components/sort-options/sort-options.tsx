@@ -1,12 +1,15 @@
 import {getActiveFilter} from '../../store/action';
 import {useAppDispatch} from '../../hooks';
+import {Filters} from '../../const';
+import {Filter} from '../../types/filter';
 
-function SortOptions() : JSX.Element {
+type SortOptionsProps = {
+  activeFilter: string;
+}
+
+function SortOptions({activeFilter} : SortOptionsProps) : JSX.Element {
   const dispatch = useAppDispatch();
-  const setSelectedFilterPopular = () => {dispatch(getActiveFilter('Popular'));};
-  const setSelectedFilterPriceLowToHigh = () => {dispatch(getActiveFilter('PriceLowToHigh'));};
-  const setSelectedFilterPriceHighToLow = () => {dispatch(getActiveFilter('PriceHighToLow'));};
-  const setSelectedFilterTopRatedFirst = () => {dispatch(getActiveFilter('TopRatedFirst'));};
+  const setSelectedFilter = (filterType: string) => {dispatch(getActiveFilter(filterType));};
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by </span>
@@ -17,10 +20,8 @@ function SortOptions() : JSX.Element {
         </svg>
       </span>
       <ul className="places__options places__options--custom places__options--opened">
-        <li className="places__option places__option--active" tabIndex={0} onClick={setSelectedFilterPopular}>Popular</li>
-        <li className="places__option" tabIndex={0} onClick={setSelectedFilterPriceLowToHigh}>Price: low to high</li>
-        <li className="places__option" tabIndex={0} onClick={setSelectedFilterPriceHighToLow}>Price: high to low</li>
-        <li className="places__option" tabIndex={0} onClick={setSelectedFilterTopRatedFirst}>Top rated first</li>
+        {Filters.map((filter : Filter) => (<li key={filter.type} className={`places__option ${filter.type === activeFilter && 'places__option--active'}`} tabIndex={0} onClick={() => setSelectedFilter(filter.type)}>{filter.title}</li>)
+        )}
       </ul>
     </form>
   );

@@ -6,22 +6,14 @@ import ListCities from '../components/list-cities/list-cities';
 import {useState} from 'react';
 import {getActiveCity} from '../store/action';
 import SortOptions from '../components/sort-options/sort-options';
+import filterSort from '../functions/filter';
 
 function MainScreen(): JSX.Element {
   const activeCity : string = useAppSelector((state) => state.activeCity);
+  const activeFilter : string = useAppSelector((state) => state.activeFilter);
   const offers : Offers = useAppSelector((state) => state.offers);
   const offersActiveCity : Offers = offers.filter((offer) => offer.city.name === activeCity);
-  switch (useAppSelector((state) => state.activeFilter)){
-    case 'PriceLowToHigh':
-      offersActiveCity.sort((a, b) => (a.price - b.price));
-      break;
-    case 'PriceHighToLow':
-      offersActiveCity.sort((a, b) => (b.price - a.price));
-      break;
-    case 'TopRatedFirst':
-      offersActiveCity.sort((a, b) => (b.rating - a.rating));
-      break;
-  }
+  filterSort(offersActiveCity, activeFilter);
   const city : City = offersActiveCity[0].city;
   const dispatch = useAppDispatch();
   const [mouseFocusId, setMouseFocusId] = useState(0);
@@ -88,7 +80,7 @@ function MainScreen(): JSX.Element {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{offersActiveCity.length} places to stay in {city.name}</b>
-                <SortOptions/>
+                <SortOptions activeFilter={activeFilter}/>
                 <div className="cities__places-list places__list tabs__content">
                   <OfferList offers={offersActiveCity} setMouseFocusId={setMouseFocusId}/>
                 </div>
