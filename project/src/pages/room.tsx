@@ -5,13 +5,11 @@ import OfferList from '../components/offer-list/offer-list';
 import {nearby} from '../mocks/nearby';
 import Map from '../components/map/map';
 import {useState} from 'react';
+import {useAppSelector} from '../hooks';
 
-type PropertyProps = {
-  offers: Offers;
-}
-
-function Room({offers}: PropertyProps): JSX.Element {
+function Room(): JSX.Element {
   const { id } = useParams();
+  const offers : Offers = useAppSelector((state) => state.offers);
   const offer : Offer | undefined = offers.find((element) => element.id === Number(id));
   const city = offer?.city as City;
   const [mouseFocusId, setMouseFocusId] = useState(0);

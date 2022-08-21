@@ -9,15 +9,14 @@ import SortOptions from '../components/sort-options/sort-options';
 import filterSort from '../functions/filter';
 
 function MainScreen(): JSX.Element {
-  const activeCity : string = useAppSelector((state) => state.activeCity);
+  const dispatch = useAppDispatch();
+  const activeCity : City = useAppSelector((state) => state.activeCity);
   const activeFilter : string = useAppSelector((state) => state.activeFilter);
   const offers : Offers = useAppSelector((state) => state.offers);
-  const offersActiveCity : Offers = offers.filter((offer) => offer.city.name === activeCity);
+  const offersActiveCity : Offers = offers.filter((offer) => offer.city.name === activeCity.name);
   filterSort(offersActiveCity, activeFilter);
-  const city : City = offersActiveCity[0].city;
-  const dispatch = useAppDispatch();
   const [mouseFocusId, setMouseFocusId] = useState(0);
-  const setSelectedCityHandler = (cityName: string) => {dispatch(getActiveCity(cityName));};
+  const setSelectedCityHandler = (city : City) => {dispatch(getActiveCity(city));};
   return (
     <>
       <div style={{display: 'none'}}>
@@ -73,13 +72,13 @@ function MainScreen(): JSX.Element {
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
-            <ListCities setSelectedCityHandler={setSelectedCityHandler} activeCity={city}/>
+            <ListCities setSelectedCityHandler={setSelectedCityHandler} activeCity={activeCity}/>
           </div>
           <div className="cities">
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offersActiveCity.length} places to stay in {city.name}</b>
+                <b className="places__found">{offersActiveCity.length} places to stay in {activeCity.name}</b>
                 <SortOptions activeFilter={activeFilter}/>
                 <div className="cities__places-list places__list tabs__content">
                   <OfferList offers={offersActiveCity} setMouseFocusId={setMouseFocusId}/>
@@ -87,7 +86,7 @@ function MainScreen(): JSX.Element {
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map city={city} offers={offersActiveCity} selectedCardId={mouseFocusId}></Map>
+                  <Map city={activeCity} offers={offersActiveCity} selectedCardId={mouseFocusId}></Map>
                 </section>
               </div>
             </div>

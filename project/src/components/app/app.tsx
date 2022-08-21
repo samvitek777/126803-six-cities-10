@@ -6,14 +6,17 @@ import Room from '../../pages/room';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../../pages/not-found-screen';
-import {Offers} from '../../types/offers';
+import {useAppSelector} from '../../hooks';
+import LoadingSpinner from '../loading-screen/spinner';
 
-type AppProps = {
-  placesCount: number;
-  offers: Offers;
-}
+function App(): JSX.Element {
+  const {isDataLoaded} = useAppSelector((state) => state);
 
-function App({placesCount, offers}: AppProps): JSX.Element {
+  if (isDataLoaded) {
+    return (
+      <LoadingSpinner />
+    );
+  }
   return (
     <BrowserRouter>
       <Routes>
@@ -35,7 +38,7 @@ function App({placesCount, offers}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<Room offers={offers}/>}
+          element={<Room/>}
         />
         <Route
           path="*"
