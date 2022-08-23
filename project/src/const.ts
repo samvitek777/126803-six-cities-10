@@ -8,7 +8,8 @@ export enum AppRoute {
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
-  NoAuth = 'NO_AUTH'
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN'
 }
 
 export const URL_MARKER_DEFAULT =
@@ -69,5 +70,7 @@ export const Filters = [{type: 'Popular', title: 'Popular'}, {type: 'PriceLowToH
 
 export enum APIRoute {
   Hotels = '/hotels',
+  Login = '/login',
+  Logout = '/logout'
 }
 
