@@ -3,14 +3,14 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Login from '../../pages/login';
 import Favorites from '../../pages/favorites';
 import Room from '../../pages/room';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../../pages/not-found-screen';
 import {useAppSelector} from '../../hooks';
 import LoadingSpinner from '../loading-screen/spinner';
 
 function App(): JSX.Element {
-  const {isDataLoaded} = useAppSelector((state) => state);
+  const {isDataLoaded, authorizationStatus} = useAppSelector((state) => state);
 
   if (isDataLoaded) {
     return (
@@ -31,7 +31,7 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <Favorites/>
             </PrivateRoute>
           }

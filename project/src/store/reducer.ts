@@ -3,14 +3,16 @@ import {City, Offers} from '../types/offers';
 import {
   getActiveCity,
   getActiveFilter,
-  loadHotels, setDataLoadedStatus
+  loadHotels, requireAuthorization, setDataLoadedStatus
 } from './action';
+import {AuthorizationStatus} from '../const';
 
 type InitState = {
   offers : Offers,
   activeCity : City,
   activeFilter : string,
-  isDataLoaded: boolean
+  isDataLoaded: boolean,
+  authorizationStatus: AuthorizationStatus
 }
 
 const initialState : InitState = {
@@ -24,7 +26,8 @@ const initialState : InitState = {
     }
   },
   activeFilter: 'Popular',
-  isDataLoaded: false
+  isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -40,6 +43,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(getActiveFilter, (state, action) => {
       state.activeFilter = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
 
