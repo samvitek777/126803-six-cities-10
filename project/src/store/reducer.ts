@@ -1,22 +1,31 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {City, Offers} from '../types/offers';
+import {City, Offer, Offers} from '../types/offers';
 import {
+  currentUser,
   getActiveCity,
-  getActiveFilter,
-  loadHotels, requireAuthorization, setDataLoadedStatus
+  getActiveFilter, loadCommentsById,
+  loadHotels, loadHotelsById, loadHotelsByIdNearby, requireAuthorization, setDataLoadedStatus
 } from './action';
 import {AuthorizationStatus} from '../const';
+import {Comments, User} from '../types/comment';
 
 type InitState = {
   offers : Offers,
+  offer : Offer | undefined,
+  nearby : Offers,
+  comments: Comments,
   activeCity : City,
   activeFilter : string,
   isDataLoaded: boolean,
-  authorizationStatus: AuthorizationStatus
+  authorizationStatus: AuthorizationStatus,
+  currentUser: User | undefined
 }
 
 const initialState : InitState = {
   offers: [],
+  offer: undefined,
+  nearby: [],
+  comments: [],
   activeCity: {
     'name': 'Paris',
     'location': {
@@ -28,6 +37,7 @@ const initialState : InitState = {
   activeFilter: 'Popular',
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
+  currentUser: undefined
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -46,6 +56,18 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(loadHotelsById, (state, action) => {
+      state.offer = action.payload;
+    })
+    .addCase(loadHotelsByIdNearby, (state, action) => {
+      state.nearby = action.payload;
+    })
+    .addCase(loadCommentsById, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(currentUser, (state, action) => {
+      state.currentUser = action.payload;
     });
 });
 
