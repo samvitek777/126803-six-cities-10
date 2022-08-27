@@ -3,6 +3,7 @@ export type User = {
   id: number
   isPro: boolean
   name: string
+  token: string
 }
 
 export type Comment = {
@@ -10,7 +11,13 @@ export type Comment = {
   date: string
   id: number
   rating: number
-  user: User
+  user: User | undefined
+}
+
+export type AddComment = {
+  hotelId: number
+  comment: string
+  rating: number
 }
 
 export type Comments = Comment[];

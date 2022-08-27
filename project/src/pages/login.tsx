@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import {AuthData} from '../types/auth-data';
 import {loginAction} from '../store/api-actions';
 import {AppRoute} from '../const';
+import {toast} from 'react-toastify';
 
 function Login(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -12,6 +13,9 @@ function Login(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+  const PASSWORD_REGEXP = /^[^ ]*$/iu;
+
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
@@ -19,13 +23,20 @@ function Login(): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current !== null && passwordRef.current !== null &&
+      EMAIL_REGEXP.test(loginRef.current.value) && PASSWORD_REGEXP.test(passwordRef.current.value)) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
+      navigate(AppRoute.Root);
+    } else {
+      if(loginRef.current === null || !EMAIL_REGEXP.test(loginRef.current.value)){
+        toast.error('Ошибка логина');
+      } else if(passwordRef.current === null || !PASSWORD_REGEXP.test(passwordRef.current.value)){
+        toast.error('Ошибка пароля');
+      }
     }
-    navigate(AppRoute.Root);
   };
   return (
     <>

@@ -7,13 +7,10 @@ import {useState} from 'react';
 import {getActiveCity} from '../store/action';
 import SortOptions from '../components/sort-options/sort-options';
 import filterSort from '../functions/filter';
-import {AppRoute, AuthorizationStatus} from '../const';
-import {useNavigate} from 'react-router-dom';
-import {logoutAction} from '../store/api-actions';
+import HeaderScreen from '../components/header/header';
 
 function MainScreen(): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const activeCity : City = useAppSelector((state) => state.activeCity);
   const activeFilter : string = useAppSelector((state) => state.activeFilter);
   const offers : Offers = useAppSelector((state) => state.offers);
@@ -21,7 +18,6 @@ function MainScreen(): JSX.Element {
   filterSort(offersActiveCity, activeFilter);
   const [mouseFocusId, setMouseFocusId] = useState(0);
   const setSelectedCityHandler = (city : City) => {dispatch(getActiveCity(city));};
-  const authorizationStatus : AuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
   return (
     <>
       <div style={{display: 'none'}}>
@@ -45,40 +41,7 @@ function MainScreen(): JSX.Element {
       </div>
 
       <div className="page page--gray page--main">
-        <header className="header">
-          <div className="container">
-            <div className="header__wrapper">
-              <div className="header__left">
-                <a className="header__logo-link header__logo-link--active">
-                  <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-                </a>
-              </div>
-              <nav className="header__nav">
-                <ul className="header__nav-list">
-                  <li className="header__nav-item user">
-                    {authorizationStatus === AuthorizationStatus.Auth &&
-                      <a className="header__nav-link header__nav-link--profile" href="#">
-                        <div className="header__avatar-wrapper user__avatar-wrapper" />
-                        <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                        <span className="header__favorite-count">3</span>
-                      </a>}
-                  </li>
-                  <li className="header__nav-item">
-                    {authorizationStatus === AuthorizationStatus.Auth &&
-                      <a className="header__nav-link" onClick={() => dispatch(logoutAction())}>
-                        <span className="header__signout">Sign out</span>
-                      </a>}
-                    {authorizationStatus === AuthorizationStatus.NoAuth &&
-                      <a className="header__nav-link" onClick={() => navigate(AppRoute.Login)}>
-                        <span className="header__signout">Sign in</span>
-                      </a>}
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </header>
-
+        <HeaderScreen/>
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">

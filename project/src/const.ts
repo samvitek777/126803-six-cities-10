@@ -4,6 +4,7 @@ export enum AppRoute {
   Favorites = '/favorites',
   Root = '/',
   Room = '/offer/:id',
+  NotFount = '/404_not_fount',
 }
 
 export enum AuthorizationStatus {
@@ -11,9 +12,6 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
-
-export const URL_MARKER_DEFAULT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 
 export const Cities = [
   {
@@ -71,6 +69,9 @@ export const Filters = [{type: 'Popular', title: 'Popular'}, {type: 'PriceLowToH
 export enum APIRoute {
   Hotels = '/hotels',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  HotelById = '/hotels/',
+  Nearby = '/nearby',
+  Comments = '/comments/'
 }
 
