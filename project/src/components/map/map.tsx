@@ -1,5 +1,5 @@
 import {Icon, Marker} from 'leaflet';
-import {useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import useMap from '../../hooks/useMap';
 import 'leaflet/dist/leaflet.css';
 import {City, Offers} from '../../types/offers';
@@ -49,4 +49,4 @@ function Map({city, offers, selectedCardId}: MapProps): JSX.Element {
   return (<section style={{height: '100%'}} className='cities__map' ref={mapRef} />);
 }
 
-export default Map;
+export default React.memo(Map);

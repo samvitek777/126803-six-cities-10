@@ -4,6 +4,7 @@ import {Comments} from '../../types/comment';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchAddCommentAction} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 type MessageFormProps = {
   comments: Comments,
@@ -12,7 +13,7 @@ type MessageFormProps = {
 
 function MessageForm({comments, hotelId} : MessageFormProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const [formData, setFormData] = useState({
     rating: 0,
     review: ''

@@ -4,20 +4,22 @@ import Map from '../components/map/map';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import ListCities from '../components/list-cities/list-cities';
 import {useState} from 'react';
-import {getActiveCity} from '../store/action';
 import SortOptions from '../components/sort-options/sort-options';
 import filterSort from '../functions/filter';
 import HeaderScreen from '../components/header/header';
+import {getActiveCity, getActiveFilter} from '../store/app-process/selectors';
+import {getOffers} from '../store/app-data/selectors';
+import {setActiveCity} from '../store/app-process/app-process';
 
 function MainScreen(): JSX.Element {
   const dispatch = useAppDispatch();
-  const activeCity : City = useAppSelector((state) => state.activeCity);
-  const activeFilter : string = useAppSelector((state) => state.activeFilter);
-  const offers : Offers = useAppSelector((state) => state.offers);
+  const activeCity : City = useAppSelector(getActiveCity);
+  const activeFilter : string = useAppSelector(getActiveFilter);
+  const offers : Offers = useAppSelector(getOffers);
   const offersActiveCity : Offers = offers.filter((offer) => offer.city.name === activeCity.name);
   filterSort(offersActiveCity, activeFilter);
   const [mouseFocusId, setMouseFocusId] = useState(0);
-  const setSelectedCityHandler = (city : City) => {dispatch(getActiveCity(city));};
+  const setSelectedCityHandler = (city : City) => {dispatch(setActiveCity(city));};
   return (
     <>
       <div style={{display: 'none'}}>

@@ -75,3 +75,9 @@ export enum APIRoute {
   Comments = '/comments/'
 }
 
+export enum NameSpace {
+  Data = 'DATA',
+  App = 'APP',
+  User = 'USER',
+}
+
