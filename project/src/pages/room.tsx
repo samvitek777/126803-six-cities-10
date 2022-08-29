@@ -8,21 +8,21 @@ import {useAppDispatch, useAppSelector} from '../hooks';
 import {fetchCommentsByIdAction, fetchHotelByIdAction, fetchHotelByIdNearbyAction} from '../store/api-actions';
 import {Comments} from '../types/comment';
 import HeaderScreen from '../components/header/header';
+import {getComments, getNearby, getOffer} from '../store/app-data/selectors';
+import {getActiveCity} from '../store/app-process/selectors';
 
 function Room(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  //const offers : Offers = useAppSelector((state) => state.offers);
   useEffect(() => {
     dispatch(fetchHotelByIdAction(Number(id)));
     dispatch(fetchHotelByIdNearbyAction(Number(id)));
     dispatch(fetchCommentsByIdAction(Number(id)));
   }, []);
-  const offer : Offer | undefined = useAppSelector((state) => state.offer);
-  const nearby : Offers = useAppSelector((state) => state.nearby);
-  const comments : Comments = useAppSelector((state) => state.comments);
-  //const offer : Offer | undefined = offers.find((element) => element.id === Number(id));
-  const city : City = useAppSelector((state) => state.activeCity);
+  const offer : Offer | undefined = useAppSelector(getOffer);
+  const nearby : Offers = useAppSelector(getNearby);
+  const comments : Comments = useAppSelector(getComments);
+  const city : City = useAppSelector(getActiveCity);
   const [mouseFocusId, setMouseFocusId] = useState(0);
   return (
     <>

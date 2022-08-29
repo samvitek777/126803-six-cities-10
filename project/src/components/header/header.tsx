@@ -3,12 +3,13 @@ import {logoutAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useNavigate} from 'react-router-dom';
 import {User} from '../../types/comment';
+import {getAuthorizationStatus, getCurrentUser} from '../../store/user-process/selectors';
 
 function HeaderScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const authorizationStatus : AuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const currentUser : User | undefined = useAppSelector((state) => state.currentUser);
+  const authorizationStatus : AuthorizationStatus = useAppSelector(getAuthorizationStatus);
+  const currentUser : User | undefined = useAppSelector(getCurrentUser);
   return (
     <header className="header">
       <div className="container">

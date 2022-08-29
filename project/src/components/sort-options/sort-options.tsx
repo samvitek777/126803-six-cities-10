@@ -1,7 +1,7 @@
-import {getActiveFilter} from '../../store/action';
 import {useAppDispatch} from '../../hooks';
 import {Filters} from '../../const';
 import {Filter} from '../../types/filter';
+import {setActiveFilter} from '../../store/app-process/app-process';
 
 type SortOptionsProps = {
   activeFilter: string;
@@ -9,7 +9,7 @@ type SortOptionsProps = {
 
 function SortOptions({activeFilter} : SortOptionsProps) : JSX.Element {
   const dispatch = useAppDispatch();
-  const setSelectedFilter = (filterType: string) => {dispatch(getActiveFilter(filterType));};
+  const setSelectedFilter = (filterType: string) => {dispatch(setActiveFilter(filterType));};
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by </span>
