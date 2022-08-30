@@ -18,10 +18,16 @@ function MessageForm({comments, hotelId} : MessageFormProps): JSX.Element {
     rating: 0,
     review: ''
   });
+  const [disabledBtn, setDisabledBtn] = useState(true);
   const updateStateHandle = (evt: ChangeEvent) => {
     const target = evt.target as HTMLInputElement;
     const {name, value} = target;
     setFormData({...formData, [name]: value});
+    if(formData.review.length > 50 && formData.review.length < 3000 && formData.rating > 0){
+      setDisabledBtn(false);
+    } else {
+      setDisabledBtn(true);
+    }
   };
   const submitHandle = (evt: FormEvent) => {
     evt.preventDefault();
@@ -77,7 +83,7 @@ function MessageForm({comments, hotelId} : MessageFormProps): JSX.Element {
               To submit review please make sure to set <span className="reviews__star">rating</span> and
               describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
             </p>
-            <button className="reviews__submit form__submit button" type="submit">Submit</button>
+            <button className="reviews__submit form__submit button" type="submit" disabled={disabledBtn}>Submit</button>
           </div>
         </form>}
     </section>

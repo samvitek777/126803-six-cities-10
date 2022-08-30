@@ -1,5 +1,5 @@
 import HeaderScreen from '../components/header/header';
-import {City, Offers} from '../types/offers';
+import {Offers} from '../types/offers';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import {getFavorites} from '../store/app-data/selectors';
 import {useEffect} from 'react';
@@ -13,13 +13,15 @@ function Favorites(): JSX.Element {
     dispatch(fetchFavoritesByIdAction());
   }, []);
   const favorites : Offers = useAppSelector(getFavorites);
-  const myMapFavorites = new Map<City, Offers>();
+  const myMapFavorites = new Map<string, Offers>();
   Cities.forEach( (city) => {
     const favoritesOffers = favorites.filter((offer) => offer.city.name === city.name);
     if(favoritesOffers.length > 0){
-      myMapFavorites.set(city, favoritesOffers);
+      myMapFavorites.set(city.name, favoritesOffers);
     }
   });
+  let keyValue = 0;
+  const citiesOffers: [string, Offers][] = Object.entries(myMapFavorites);
   return (
     <>
       <div style={{display: 'none'}}>
@@ -43,7 +45,14 @@ function Favorites(): JSX.Element {
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
-                {myMapFavorites.forEach((value : Offers, city : City) => {<FavoritesItems city={city} favorites={value} key={city.name}/>;})};
+                {
+                  citiesOffers.map((offersByCity) => {
+                    keyValue++;
+                    return (
+                      <FavoritesItems key={keyValue} offers={offersByCity} />
+                    );
+                  })
+                }
               </ul>
             </section>
           </div>
