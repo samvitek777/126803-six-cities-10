@@ -2,8 +2,8 @@ import {AppData} from '../../types/state';
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
 import {
-  fetchAddCommentAction,
-  fetchCommentsByIdAction,
+  fetchAddCommentAction, fetchAddFavoritesAction,
+  fetchCommentsByIdAction, fetchDeleteFavoritesAction, fetchFavoritesByIdAction,
   fetchHotelByIdAction,
   fetchHotelByIdNearbyAction,
   fetchHotelsAction
@@ -14,6 +14,7 @@ const initialState: AppData = {
   offer : undefined,
   nearby : [],
   comments: [],
+  favorites: [],
   isDataLoaded: false,
   isRoomLoaded: false,
 };
@@ -57,6 +58,27 @@ export const appData = createSlice({
       })
       .addCase(fetchAddCommentAction.fulfilled, (state, action) => {
         state.comments = action.payload;
+        state.isRoomLoaded = false;
+      })
+      .addCase(fetchFavoritesByIdAction.pending, (state) => {
+        state.isRoomLoaded = true;
+      })
+      .addCase(fetchFavoritesByIdAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
+        state.isRoomLoaded = false;
+      })
+      .addCase(fetchAddFavoritesAction.pending, (state) => {
+        state.isRoomLoaded = true;
+      })
+      .addCase(fetchAddFavoritesAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
+        state.isRoomLoaded = false;
+      })
+      .addCase(fetchDeleteFavoritesAction.pending, (state) => {
+        state.isRoomLoaded = true;
+      })
+      .addCase(fetchDeleteFavoritesAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
         state.isRoomLoaded = false;
       });
   }

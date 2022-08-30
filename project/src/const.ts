@@ -72,7 +72,11 @@ export enum APIRoute {
   Logout = '/logout',
   HotelById = '/hotels/',
   Nearby = '/nearby',
-  Comments = '/comments/'
+  Comments = '/comments/',
+  Favorites = '/favorite',
+  StatusFavorites = '/favorite/',
+  StatusAddFavorites = '/1',
+  StatusDeleteFavorites = '/0',
 }
 
 export enum NameSpace {
@@ -80,4 +84,8 @@ export enum NameSpace {
   App = 'APP',
   User = 'USER',
 }
+
+export const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
 

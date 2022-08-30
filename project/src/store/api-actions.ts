@@ -1,11 +1,12 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state';
 import {AxiosInstance} from 'axios';
-import {APIRoute} from '../const';
+import {APIRoute, AppRoute} from '../const';
 import {Offer, Offers} from '../types/offers';
 import {dropToken, saveToken} from '../services/token';
 import {AuthData} from '../types/auth-data';
 import {AddComment, Comments, User} from '../types/comment';
+import {redirectToRoute} from './action';
 
 export const fetchHotelsAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch,
@@ -62,8 +63,13 @@ export const fetchHotelByIdAction = createAsyncThunk<Offer, number, {
 }>(
   'data/fetchHotelById',
   async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Offer>(APIRoute.HotelById + id);
-    return data;
+    try {
+      const {data} = await api.get<Offer>(APIRoute.HotelById + id);
+      return data;
+    } catch {
+      dispatch(redirectToRoute(AppRoute.NotFount));
+      throw new Error();
+    }
   },
 );
 
@@ -99,6 +105,42 @@ export const fetchAddCommentAction = createAsyncThunk<Comments, AddComment, {
   'data/fetchAddCommentAction',
   async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
     const {data} = await api.post<Comments>(APIRoute.Comments + hotelId, {comment, rating});
+    return data;
+  },
+);
+
+export const fetchFavoritesByIdAction = createAsyncThunk<Offers, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchFavoritesByIdAction',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<Offers>(APIRoute.Favorites);
+    return data;
+  },
+);
+
+export const fetchAddFavoritesAction = createAsyncThunk<Offers, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchAddFavoritesAction',
+  async (hotelId, {dispatch, extra: api}) => {
+    const {data} = await api.post<Offers>(APIRoute.StatusFavorites + hotelId + APIRoute.StatusAddFavorites);
+    return data;
+  },
+);
+
+export const fetchDeleteFavoritesAction = createAsyncThunk<Offers, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchDeleteFavoritesAction',
+  async (hotelId, {dispatch, extra: api}) => {
+    const {data} = await api.post<Offers>(APIRoute.StatusFavorites + hotelId + APIRoute.StatusDeleteFavorites);
     return data;
   },
 );

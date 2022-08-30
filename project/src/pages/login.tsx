@@ -1,18 +1,21 @@
 import {FormEvent, useRef} from 'react';
-import {useAppDispatch} from '../hooks';
+import {useAppDispatch, useAppSelector} from '../hooks';
 import {useNavigate} from 'react-router-dom';
 import {AuthData} from '../types/auth-data';
 import {loginAction} from '../store/api-actions';
-import {AppRoute} from '../const';
+import {AppRoute, AuthorizationStatus} from '../const';
 import {toast} from 'react-toastify';
+import {getAuthorizationStatus} from '../store/user-process/selectors';
 
 function Login(): JSX.Element {
+  const navigate = useNavigate();
+  if(useAppSelector(getAuthorizationStatus) === AuthorizationStatus.Auth){
+    navigate(AppRoute.Root);
+  }
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
   const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
   const PASSWORD_REGEXP = /^[^ ]*$/iu;
 

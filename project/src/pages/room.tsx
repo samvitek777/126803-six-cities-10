@@ -24,6 +24,10 @@ function Room(): JSX.Element {
   const comments : Comments = useAppSelector(getComments);
   const city : City = useAppSelector(getActiveCity);
   const [mouseFocusId, setMouseFocusId] = useState(0);
+  let nearbyMap = nearby;
+  if(offer !== undefined){
+    nearbyMap = [...nearby, offer];
+  }
   return (
     <>
       <div style={{display: 'none'}}>
@@ -62,12 +66,13 @@ function Room(): JSX.Element {
             </div>
             <div className="property__container container">
               <div className="property__wrapper">
-                <div className="property__mark">
-                  <span>Premium</span>
-                </div>
+                {offer?.isPremium &&
+                  <div className="property__mark">
+                    <span>Premium</span>
+                  </div>}
                 <div className="property__name-wrapper">
                   <h1 className="property__name">
-                    {offer?.description}
+                    {offer?.title}
                   </h1>
                   <button className="property__bookmark-button button" type="button">
                     <svg className="property__bookmark-icon" width="31" height="33">
@@ -78,7 +83,7 @@ function Room(): JSX.Element {
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{width: '80'}}></span>
+                    <span style={{width: `${(offer?.rating === undefined ? 0 : offer.rating) * 20}%`}}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="property__rating-value rating__value">{offer?.rating}</span>
@@ -110,26 +115,22 @@ function Room(): JSX.Element {
                 <div className="property__host">
                   <h2 className="property__host-title">Meet the host</h2>
                   <div className="property__host-user user">
-                    <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                      <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74"
+                    <div className={`property__avatar-wrapper ${offer?.host.isPro && 'property__avatar-wrapper--pro'} user__avatar-wrapper`}>
+                      <img className="property__avatar user__avatar" src={offer?.host.avatarUrl} width="74"
                         height="74" alt="Host avatar"
                       />
                     </div>
                     <span className="property__user-name">
-                    Angelina
+                      {offer?.host.name}
                     </span>
-                    <span className="property__user-status">
-                    Pro
-                    </span>
+                    {offer?.host.isPro &&
+                      <span className="property__user-status">
+                        Pro
+                      </span>}
                   </div>
                   <div className="property__description">
                     <p className="property__text">
-                      A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The
-                      building is green and from 18th century.
-                    </p>
-                    <p className="property__text">
-                      An independent House, strategically located between Rembrand Square and National Opera, but where
-                      the bustle of the city comes to rest in this alley flowery and colorful.
+                      {offer?.description}
                     </p>
                   </div>
                 </div>
@@ -137,7 +138,7 @@ function Room(): JSX.Element {
               </div>
             </div>
             <section className="property__map map">
-              <Map city={city} offers={nearby} selectedCardId={mouseFocusId}></Map>
+              <Map city={city} offers={nearbyMap} selectedCardId={offer === undefined ? mouseFocusId : offer.id}></Map>
             </section>
           </section>
           <div className="container">

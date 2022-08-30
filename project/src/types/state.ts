@@ -17,6 +17,7 @@ export type AppData = {
   offer : Offer | undefined,
   nearby : Offers,
   comments: Comments,
+  favorites: Offers,
   isDataLoaded: boolean,
   isRoomLoaded: boolean,
 };
@@ -24,4 +25,5 @@ export type AppData = {
 export type AppProcess = {
   activeCity : City,
   activeFilter : string,
+  favorites : Offers,
 };

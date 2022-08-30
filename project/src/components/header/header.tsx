@@ -23,7 +23,7 @@ function HeaderScreen(): JSX.Element {
             <ul className="header__nav-list">
               <li className="header__nav-item user">
                 {authorizationStatus === AuthorizationStatus.Auth &&
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <a className="header__nav-link header__nav-link--profile" onClick={() => navigate(AppRoute.Favorites)}>
                     <div className="header__avatar-wrapper user__avatar-wrapper" />
                     <span className="header__user-name user__name">{currentUser?.name}</span>
                     <span className="header__favorite-count">3</span>
@@ -32,7 +32,7 @@ function HeaderScreen(): JSX.Element {
               <li className="header__nav-item">
                 {authorizationStatus === AuthorizationStatus.Auth &&
                   <a className="header__nav-link" onClick={() => dispatch(logoutAction())}>
-                    <span className="header__signout">Sign out</span>
+                    <span className="header__signout">Log Out</span>
                   </a>}
                 {authorizationStatus === AuthorizationStatus.NoAuth &&
                   <a className="header__nav-link" onClick={() => navigate(AppRoute.Login)}>
