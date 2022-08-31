@@ -11,6 +11,7 @@ import LoadingSpinner from '../components/loading-screen/spinner';
 import {FavoritesOffers} from '../types/favorite';
 import {useEffect} from 'react';
 import {fetchFavoritesByIdAction} from '../store/api-actions';
+import {Link} from 'react-router-dom';
 
 function Favorites(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -70,9 +71,9 @@ function Favorites(): JSX.Element {
           </div>
         </main>
         <footer className="footer container">
-          <a className="footer__logo-link" href="main.html">
+          <Link className="footer__logo-link" to="/">
             <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-          </a>
+          </Link>
         </footer>
       </div>
     </>

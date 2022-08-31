@@ -71,19 +71,11 @@ export const appData = createSlice({
         state.countFavorites = state.favorites.length;
         state.isFavoriteLoaded = false;
       })
-      .addCase(fetchAddFavoritesAction.pending, (state) => {
-        //state.isStatusFavoriteLoaded = true;
-      })
       .addCase(fetchAddFavoritesAction.fulfilled, (state) => {
         state.countFavorites = state.countFavorites + 1;
-        //state.isStatusFavoriteLoaded = false;
-      })
-      .addCase(fetchDeleteFavoritesAction.pending, (state) => {
-        //state.isStatusFavoriteLoaded = true;
       })
       .addCase(fetchDeleteFavoritesAction.fulfilled, (state) => {
         state.countFavorites = state.countFavorites - 1;
-        //state.isStatusFavoriteLoaded = false;
       });
   }
 });

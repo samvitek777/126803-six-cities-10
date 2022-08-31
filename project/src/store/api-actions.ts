@@ -136,6 +136,7 @@ export const fetchAddFavoritesAction = createAsyncThunk<Offers, number, {
   async (hotelId, {dispatch, extra: api}) => {
     const {data} = await api.post<Offers>(`${APIRoute.StatusFavorites}/${hotelId}/1`);
     dispatch(fetchFavoritesByIdAction());
+    dispatch(fetchHotelsAction());
     return data;
   },
 );
@@ -149,6 +150,7 @@ export const fetchDeleteFavoritesAction = createAsyncThunk<Offers, number, {
   async (hotelId, {dispatch, extra: api}) => {
     const {data} = await api.post<Offers>(`${APIRoute.StatusFavorites}/${hotelId}/0`);
     dispatch(fetchFavoritesByIdAction());
+    dispatch(fetchHotelsAction());
     return data;
   },
 );

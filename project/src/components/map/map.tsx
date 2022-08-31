@@ -23,7 +23,6 @@ type MapProps = {
 }
 
 function Map({city, offers, selectedCardId}: MapProps): JSX.Element {
-
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
