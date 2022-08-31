@@ -8,7 +8,7 @@ const initialState: AppProcess = {
     'location': {
       'latitude': 48.85661,
       'longitude': 2.351499,
-      'zoom': 13
+      'zoom': 13,
     }
   },
   activeFilter: 'Popular',

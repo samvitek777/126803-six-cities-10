@@ -2,8 +2,8 @@ import {AppData} from '../../types/state';
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
 import {
-  fetchAddCommentAction,
-  fetchCommentsByIdAction,
+  fetchAddCommentAction, fetchAddFavoritesAction,
+  fetchCommentsByIdAction, fetchDeleteFavoritesAction, fetchFavoritesByIdAction,
   fetchHotelByIdAction,
   fetchHotelByIdNearbyAction,
   fetchHotelsAction
@@ -14,8 +14,12 @@ const initialState: AppData = {
   offer : undefined,
   nearby : [],
   comments: [],
+  favorites: [],
   isDataLoaded: false,
   isRoomLoaded: false,
+  isFavoriteLoaded: false,
+  isCommentLoaded: false,
+  countFavorites: 0,
 };
 
 export const appData = createSlice({
@@ -53,11 +57,33 @@ export const appData = createSlice({
         state.isRoomLoaded = false;
       })
       .addCase(fetchAddCommentAction.pending, (state) => {
-        state.isRoomLoaded = true;
+        state.isCommentLoaded = true;
       })
       .addCase(fetchAddCommentAction.fulfilled, (state, action) => {
         state.comments = action.payload;
-        state.isRoomLoaded = false;
+        state.isCommentLoaded = false;
+      })
+      .addCase(fetchFavoritesByIdAction.pending, (state) => {
+        state.isFavoriteLoaded = true;
+      })
+      .addCase(fetchFavoritesByIdAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
+        state.countFavorites = state.favorites.length;
+        state.isFavoriteLoaded = false;
+      })
+      .addCase(fetchAddFavoritesAction.pending, (state) => {
+        //state.isStatusFavoriteLoaded = true;
+      })
+      .addCase(fetchAddFavoritesAction.fulfilled, (state) => {
+        state.countFavorites = state.countFavorites + 1;
+        //state.isStatusFavoriteLoaded = false;
+      })
+      .addCase(fetchDeleteFavoritesAction.pending, (state) => {
+        //state.isStatusFavoriteLoaded = true;
+      })
+      .addCase(fetchDeleteFavoritesAction.fulfilled, (state) => {
+        state.countFavorites = state.countFavorites - 1;
+        //state.isStatusFavoriteLoaded = false;
       });
   }
 });

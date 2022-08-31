@@ -21,3 +21,8 @@ export type AddComment = {
 }
 
 export type Comments = Comment[];
+
+export type Rating = {
+  star: number,
+  title: string
+}

@@ -17,8 +17,12 @@ export type AppData = {
   offer : Offer | undefined,
   nearby : Offers,
   comments: Comments,
+  favorites: Offers,
   isDataLoaded: boolean,
   isRoomLoaded: boolean,
+  isFavoriteLoaded: boolean,
+  isCommentLoaded: boolean,
+  countFavorites: number,
 };
 
 export type AppProcess = {

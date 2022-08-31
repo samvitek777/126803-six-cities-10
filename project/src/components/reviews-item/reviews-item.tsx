@@ -1,10 +1,12 @@
 import {Comment} from '../../types/comment';
+import {MonthNames} from '../../const';
 
 type ReviewsItemProps = {
   comment: Comment;
 }
 
 function ReviewsItem({comment} : ReviewsItemProps): JSX.Element{
+  const date = new Date(comment.date);
   return (
     <li className="reviews__item" key={comment.id}>
       <div className="reviews__user user">
@@ -18,14 +20,14 @@ function ReviewsItem({comment} : ReviewsItemProps): JSX.Element{
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: '80'}}></span>
+            <span style={{width: `${(comment?.rating) * 20}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <p className="reviews__text">
           {comment.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+        <time className="reviews__time" dateTime={date.toISOString().slice(0, 10)}>{MonthNames.at(date.getMonth())} {date.getFullYear()}</time>
       </div>
     </li>
   );

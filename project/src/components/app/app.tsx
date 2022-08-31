@@ -25,7 +25,7 @@ function App(): JSX.Element {
     <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
-          path={AppRoute.Root}
+          path={AppRoute.Main}
           element={<MainScreen/>}
         />
         <Route

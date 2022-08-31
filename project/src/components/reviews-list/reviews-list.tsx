@@ -6,9 +6,14 @@ type ReviewsListProps = {
 }
 
 function ReviewsList({comments} : ReviewsListProps): JSX.Element {
+  const items = [...comments];
+  items.sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()));
+  if(items.length > 10){
+    items.length = 10;
+  }
   return (
     <ul className="reviews__list">
-      {comments.map((comment, idx) => <ReviewsItem comment={comment} key={comment.id}/>)}
+      {items.map((comment) => <ReviewsItem comment={comment} key={comment.id}/>)}
     </ul>
   );
 }

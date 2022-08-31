@@ -2,7 +2,7 @@
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
-  Root = '/',
+  Main = '/',
   Room = '/offer/:id',
   NotFount = '/404_not_fount',
 }
@@ -70,9 +70,11 @@ export enum APIRoute {
   Hotels = '/hotels',
   Login = '/login',
   Logout = '/logout',
-  HotelById = '/hotels/',
+  HotelById = '/hotels',
   Nearby = '/nearby',
-  Comments = '/comments/'
+  Comments = '/comments',
+  Favorites = '/favorite',
+  StatusFavorites = '/favorite',
 }
 
 export enum NameSpace {
@@ -80,4 +82,32 @@ export enum NameSpace {
   App = 'APP',
   User = 'USER',
 }
+
+export const MonthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+export const Rating = [
+  {
+    star: 5,
+    title: 'perfect'
+  },
+  {
+    star: 4,
+    title: 'good'
+  },
+  {
+    star: 3,
+    title: 'not bad'
+  },
+  {
+    star: 2,
+    title: 'badly'
+  },
+  {
+    star: 1,
+    title: 'terribly'
+  }
+];
+
 
