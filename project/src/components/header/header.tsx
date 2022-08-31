@@ -24,7 +24,7 @@ function HeaderScreen(): JSX.Element {
                 {authorizationStatus === AuthorizationStatus.Auth &&
                   <a className="header__nav-link header__nav-link--profile" onClick={() => navigate(AppRoute.Favorites)}>
                     <div className="header__avatar-wrapper user__avatar-wrapper" />
-                    <span className="header__user-name user__name">{currentUser?.name}</span>
+                    <span className="header__user-name user__name">{currentUser?.email}</span>
                     <span className="header__favorite-count">{countFavorites}</span>
                   </a>}
               </li>

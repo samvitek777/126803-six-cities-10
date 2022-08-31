@@ -19,7 +19,7 @@ import {getAuthorizationStatus} from '../store/user-process/selectors';
 import {AppRoute, AuthorizationStatus} from '../const';
 
 function Room(): JSX.Element {
-  const { id } = useParams();
+  const {id} = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -74,7 +74,7 @@ function Room(): JSX.Element {
             <div className="property__gallery-container container">
               <div className="property__gallery">
                 {offer?.images.map((image : string) => (
-                  <div className="property__image-wrapper" key={id}>
+                  <div className="property__image-wrapper" key={image}>
                     <img className="property__image" src={image} alt="Photo studio"/>
                   </div>
                 )

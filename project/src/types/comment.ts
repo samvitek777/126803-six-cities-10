@@ -4,6 +4,7 @@ export type User = {
   isPro: boolean
   name: string
   token: string
+  email: string
 }
 
 export type Comment = {

@@ -16,9 +16,9 @@ function FavoritesCart({offer} : FavoritesCartProps): JSX.Element {
     <article className="favorites__card place-card">
       {offer.isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`/offer/${offer.id}`}>
           <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image"/>
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
