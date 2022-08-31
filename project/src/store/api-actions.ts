@@ -7,6 +7,7 @@ import {dropToken, saveToken} from '../services/token';
 import {AuthData} from '../types/auth-data';
 import {AddComment, Comments, User} from '../types/comment';
 import {redirectToRoute} from './action';
+import {toast} from 'react-toastify';
 
 export const fetchHotelsAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch,
@@ -64,7 +65,7 @@ export const fetchHotelByIdAction = createAsyncThunk<Offer, number, {
   'data/fetchHotelById',
   async (id, {dispatch, extra: api}) => {
     try {
-      const {data} = await api.get<Offer>(APIRoute.HotelById + id);
+      const {data} = await api.get<Offer>(`${APIRoute.HotelById}/${id}`);
       return data;
     } catch {
       dispatch(redirectToRoute(AppRoute.NotFount));
@@ -80,7 +81,7 @@ export const fetchHotelByIdNearbyAction = createAsyncThunk<Offers, number, {
 }>(
   'data/fetchHotelByIdNearby',
   async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Offers>(APIRoute.HotelById + id + APIRoute.Nearby);
+    const {data} = await api.get<Offers>(`${APIRoute.HotelById}/${id}/nearby`);
     return data;
   },
 );
@@ -92,7 +93,7 @@ export const fetchCommentsByIdAction = createAsyncThunk<Comments, number, {
 }>(
   'data/fetchCommentsByIdAction',
   async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Comments>(APIRoute.Comments + id);
+    const {data} = await api.get<Comments>(`${APIRoute.Comments}/${id}`);
     return data;
   },
 );
@@ -104,8 +105,13 @@ export const fetchAddCommentAction = createAsyncThunk<Comments, AddComment, {
 }>(
   'data/fetchAddCommentAction',
   async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
-    const {data} = await api.post<Comments>(APIRoute.Comments + hotelId, {comment, rating});
-    return data;
+    try {
+      const {data} = await api.post<Comments>(`${APIRoute.Comments}/${hotelId}`, {comment, rating});
+      return data;
+    } catch {
+      toast.error('Ошибка отправки комментария');
+      throw new Error();
+    }
   },
 );
 
@@ -128,7 +134,8 @@ export const fetchAddFavoritesAction = createAsyncThunk<Offers, number, {
 }>(
   'data/fetchAddFavoritesAction',
   async (hotelId, {dispatch, extra: api}) => {
-    const {data} = await api.post<Offers>(APIRoute.StatusFavorites + hotelId + APIRoute.StatusAddFavorites);
+    const {data} = await api.post<Offers>(`${APIRoute.StatusFavorites}/${hotelId}/1`);
+    dispatch(fetchFavoritesByIdAction());
     return data;
   },
 );
@@ -140,7 +147,8 @@ export const fetchDeleteFavoritesAction = createAsyncThunk<Offers, number, {
 }>(
   'data/fetchDeleteFavoritesAction',
   async (hotelId, {dispatch, extra: api}) => {
-    const {data} = await api.post<Offers>(APIRoute.StatusFavorites + hotelId + APIRoute.StatusDeleteFavorites);
+    const {data} = await api.post<Offers>(`${APIRoute.StatusFavorites}/${hotelId}/0`);
+    dispatch(fetchFavoritesByIdAction());
     return data;
   },
 );

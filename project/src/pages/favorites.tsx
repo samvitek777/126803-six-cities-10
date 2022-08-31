@@ -1,11 +1,16 @@
 import HeaderScreen from '../components/header/header';
 import {Offers} from '../types/offers';
 import {useAppDispatch, useAppSelector} from '../hooks';
-import {getFavorites} from '../store/app-data/selectors';
-import {useEffect} from 'react';
-import {fetchFavoritesByIdAction} from '../store/api-actions';
+import {
+  getFavorites,
+  getIsFavoriteLoaded,
+} from '../store/app-data/selectors';
 import {Cities} from '../const';
 import FavoritesItems from '../components/favorites-items/favotites-items';
+import LoadingSpinner from '../components/loading-screen/spinner';
+import {FavoritesOffers} from '../types/favorite';
+import {useEffect} from 'react';
+import {fetchFavoritesByIdAction} from '../store/api-actions';
 
 function Favorites(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -13,15 +18,24 @@ function Favorites(): JSX.Element {
     dispatch(fetchFavoritesByIdAction());
   }, []);
   const favorites : Offers = useAppSelector(getFavorites);
-  const myMapFavorites = new Map<string, Offers>();
-  Cities.forEach( (city) => {
-    const favoritesOffers = favorites.filter((offer) => offer.city.name === city.name);
-    if(favoritesOffers.length > 0){
-      myMapFavorites.set(city.name, favoritesOffers);
+  const isFavoriteLoaded : boolean = useAppSelector(getIsFavoriteLoaded);
+  const favoritesOffers: FavoritesOffers = [];
+
+
+  if (isFavoriteLoaded) {
+    return (
+      <LoadingSpinner />
+    );
+  }
+
+  for (const city of Cities) {
+    if (favorites?.find((offer) => offer.city.name === city.name)) {
+      favoritesOffers.push({
+        city: city.name,
+        offers: favorites.filter((offer) => offer.city.name === city.name),
+      });
     }
-  });
-  let keyValue = 0;
-  const citiesOffers: [string, Offers][] = Object.entries(myMapFavorites);
+  }
   return (
     <>
       <div style={{display: 'none'}}>
@@ -43,15 +57,13 @@ function Favorites(): JSX.Element {
         <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
             <section className="favorites">
-              <h1 className="favorites__title">Saved listing</h1>
+              {favoritesOffers.length === 0 && <h1 className="favorites__title">Nothing yet saved.</h1>}
+              {favoritesOffers.length > 0 && <h1 className="favorites__title">Saved listing</h1>}
               <ul className="favorites__list">
                 {
-                  citiesOffers.map((offersByCity) => {
-                    keyValue++;
-                    return (
-                      <FavoritesItems key={keyValue} offers={offersByCity} />
-                    );
-                  })
+                  favoritesOffers.map((favorite) => (
+                    <FavoritesItems key={favorite.city} favorites={favorite} />
+                  ))
                 }
               </ul>
             </section>

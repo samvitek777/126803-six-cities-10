@@ -12,7 +12,6 @@ const initialState: AppProcess = {
     }
   },
   activeFilter: 'Popular',
-  favorites: [],
 };
 
 export const appProcess = createSlice({

@@ -17,6 +17,9 @@ const initialState: AppData = {
   favorites: [],
   isDataLoaded: false,
   isRoomLoaded: false,
+  isFavoriteLoaded: false,
+  isCommentLoaded: false,
+  countFavorites: 0,
 };
 
 export const appData = createSlice({
@@ -54,32 +57,33 @@ export const appData = createSlice({
         state.isRoomLoaded = false;
       })
       .addCase(fetchAddCommentAction.pending, (state) => {
-        state.isRoomLoaded = true;
+        state.isCommentLoaded = true;
       })
       .addCase(fetchAddCommentAction.fulfilled, (state, action) => {
         state.comments = action.payload;
-        state.isRoomLoaded = false;
+        state.isCommentLoaded = false;
       })
       .addCase(fetchFavoritesByIdAction.pending, (state) => {
-        state.isRoomLoaded = true;
+        state.isFavoriteLoaded = true;
       })
       .addCase(fetchFavoritesByIdAction.fulfilled, (state, action) => {
         state.favorites = action.payload;
-        state.isRoomLoaded = false;
+        state.countFavorites = state.favorites.length;
+        state.isFavoriteLoaded = false;
       })
       .addCase(fetchAddFavoritesAction.pending, (state) => {
-        state.isRoomLoaded = true;
+        //state.isStatusFavoriteLoaded = true;
       })
-      .addCase(fetchAddFavoritesAction.fulfilled, (state, action) => {
-        state.favorites = action.payload;
-        state.isRoomLoaded = false;
+      .addCase(fetchAddFavoritesAction.fulfilled, (state) => {
+        state.countFavorites = state.countFavorites + 1;
+        //state.isStatusFavoriteLoaded = false;
       })
       .addCase(fetchDeleteFavoritesAction.pending, (state) => {
-        state.isRoomLoaded = true;
+        //state.isStatusFavoriteLoaded = true;
       })
-      .addCase(fetchDeleteFavoritesAction.fulfilled, (state, action) => {
-        state.favorites = action.payload;
-        state.isRoomLoaded = false;
+      .addCase(fetchDeleteFavoritesAction.fulfilled, (state) => {
+        state.countFavorites = state.countFavorites - 1;
+        //state.isStatusFavoriteLoaded = false;
       });
   }
 });

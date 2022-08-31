@@ -1,19 +1,27 @@
-import {Offers, Offer, City} from '../types/offers';
-import {useParams} from 'react-router-dom';
+import {City, Offer, Offers} from '../types/offers';
+import {useNavigate, useParams} from 'react-router-dom';
 import MessageForm from '../components/message-form/message-form';
 import OfferList from '../components/offer-list/offer-list';
 import Map from '../components/map/map';
 import {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../hooks';
-import {fetchCommentsByIdAction, fetchHotelByIdAction, fetchHotelByIdNearbyAction} from '../store/api-actions';
+import {
+  fetchAddFavoritesAction,
+  fetchCommentsByIdAction,
+  fetchHotelByIdAction,
+  fetchHotelByIdNearbyAction
+} from '../store/api-actions';
 import {Comments} from '../types/comment';
 import HeaderScreen from '../components/header/header';
 import {getComments, getNearby, getOffer} from '../store/app-data/selectors';
 import {getActiveCity} from '../store/app-process/selectors';
+import {getAuthorizationStatus} from '../store/user-process/selectors';
+import {AppRoute, AuthorizationStatus} from '../const';
 
 function Room(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchHotelByIdAction(Number(id)));
     dispatch(fetchHotelByIdNearbyAction(Number(id)));
@@ -24,10 +32,19 @@ function Room(): JSX.Element {
   const comments : Comments = useAppSelector(getComments);
   const city : City = useAppSelector(getActiveCity);
   const [mouseFocusId, setMouseFocusId] = useState(0);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   let nearbyMap = nearby;
   if(offer !== undefined){
     nearbyMap = [...nearby, offer];
   }
+  const addFavoriteHandler = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth){
+      navigate(AppRoute.Login);
+    }
+    if(offer !== undefined){
+      dispatch(fetchAddFavoritesAction(offer.id));
+    }
+  };
   return (
     <>
       <div style={{display: 'none'}}>
@@ -74,7 +91,7 @@ function Room(): JSX.Element {
                   <h1 className="property__name">
                     {offer?.title}
                   </h1>
-                  <button className="property__bookmark-button button" type="button">
+                  <button className="property__bookmark-button button" type="button" onClick={addFavoriteHandler}>
                     <svg className="property__bookmark-icon" width="31" height="33">
                       <use href="#icon-bookmark"></use>
                     </svg>

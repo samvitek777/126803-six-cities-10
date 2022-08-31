@@ -53,7 +53,8 @@ function MainScreen(): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offersActiveCity.length} places to stay in {activeCity.name}</b>
+                {offersActiveCity.length === 0 && <b className="places__found">No places to stay available</b>}
+                {offersActiveCity.length > 0 && <b className="places__found">{offersActiveCity.length} places to stay in {activeCity.name}</b>}
                 <SortOptions activeFilter={activeFilter}/>
                 <div className="cities__places-list places__list tabs__content">
                   <OfferList offers={offersActiveCity} setMouseFocusId={setMouseFocusId}/>

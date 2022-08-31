@@ -10,7 +10,7 @@ import {getAuthorizationStatus} from '../store/user-process/selectors';
 function Login(): JSX.Element {
   const navigate = useNavigate();
   if(useAppSelector(getAuthorizationStatus) === AuthorizationStatus.Auth){
-    navigate(AppRoute.Root);
+    navigate(AppRoute.Main);
   }
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -32,7 +32,7 @@ function Login(): JSX.Element {
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
-      navigate(AppRoute.Root);
+      navigate(AppRoute.Main);
     } else {
       if(loginRef.current === null || !EMAIL_REGEXP.test(loginRef.current.value)){
         toast.error('Ошибка логина');

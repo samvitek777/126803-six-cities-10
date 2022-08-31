@@ -20,10 +20,12 @@ export type AppData = {
   favorites: Offers,
   isDataLoaded: boolean,
   isRoomLoaded: boolean,
+  isFavoriteLoaded: boolean,
+  isCommentLoaded: boolean,
+  countFavorites: number,
 };
 
 export type AppProcess = {
   activeCity : City,
   activeFilter : string,
-  favorites : Offers,
 };

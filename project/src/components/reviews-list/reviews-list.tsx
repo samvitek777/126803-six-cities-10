@@ -13,7 +13,7 @@ function ReviewsList({comments} : ReviewsListProps): JSX.Element {
   }
   return (
     <ul className="reviews__list">
-      {items.map((comment, idx) => <ReviewsItem comment={comment} key={comment.id}/>)}
+      {items.map((comment) => <ReviewsItem comment={comment} key={comment.id}/>)}
     </ul>
   );
 }

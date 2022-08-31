@@ -1,5 +1,5 @@
 import {Comment} from '../../types/comment';
-import {monthNames} from '../../const';
+import {MonthNames} from '../../const';
 
 type ReviewsItemProps = {
   comment: Comment;
@@ -27,7 +27,7 @@ function ReviewsItem({comment} : ReviewsItemProps): JSX.Element{
         <p className="reviews__text">
           {comment.comment}
         </p>
-        <time className="reviews__time" dateTime={date.toISOString().slice(0, 10)}>{monthNames.at(date.getMonth())} {date.getFullYear()}</time>
+        <time className="reviews__time" dateTime={date.toISOString().slice(0, 10)}>{MonthNames.at(date.getMonth())} {date.getFullYear()}</time>
       </div>
     </li>
   );

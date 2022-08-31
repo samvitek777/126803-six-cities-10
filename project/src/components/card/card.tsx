@@ -1,11 +1,10 @@
 import {Offer} from '../../types/offers';
-import {Link} from 'react-router-dom';
-import {useAppDispatch} from '../../hooks';
-import {
-  fetchAddFavoritesAction,
-  fetchDeleteFavoritesAction
-} from '../../store/api-actions';
+import {Link, useNavigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {fetchAddFavoritesAction, fetchDeleteFavoritesAction} from '../../store/api-actions';
 import {useEffect, useState} from 'react';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {AppRoute, AuthorizationStatus} from '../../const';
 
 type CardProps = {
   offer: Offer;
@@ -15,12 +14,17 @@ type CardProps = {
 
 function Card({offer, setMouseFocusId} : CardProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const [active, setActive] = useState(false);
   useEffect(() => {
     setActive(offer.isFavorite);
   }, []);
   const setStatusFavoritesHandler = () => {
-    if(offer.isFavorite){
+    if(authorizationStatus !== AuthorizationStatus.Auth){
+      navigate(AppRoute.Login);
+    }
+    if(active){
       dispatch(fetchDeleteFavoritesAction(offer.id));
     } else {
       dispatch(fetchAddFavoritesAction(offer.id));
