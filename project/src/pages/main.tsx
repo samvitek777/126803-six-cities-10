@@ -5,8 +5,8 @@ import {useAppDispatch, useAppSelector} from '../hooks';
 import ListCities from '../components/list-cities/list-cities';
 import {useState} from 'react';
 import SortOptions from '../components/sort-options/sort-options';
-import filterSort from '../functions/filter';
-import HeaderScreen from '../components/header/header';
+import getSortOffers from '../functions/filters';
+import HeaderScreen from '../components/header-screen/header-screen';
 import {getActiveCity, getActiveFilter} from '../store/app-process/selectors';
 import {getOffers} from '../store/app-data/selectors';
 import {setActiveCity} from '../store/app-process/app-process';
@@ -17,9 +17,9 @@ function MainScreen(): JSX.Element {
   const activeFilter : string = useAppSelector(getActiveFilter);
   const offers : Offers = useAppSelector(getOffers);
   const offersActiveCity : Offers = offers.filter((offer) => offer.city.name === activeCity.name);
-  filterSort(offersActiveCity, activeFilter);
+  getSortOffers(offersActiveCity, activeFilter);
   const [mouseFocusId, setMouseFocusId] = useState(0);
-  const setSelectedCityHandler = (city : City) => {dispatch(setActiveCity(city));};
+  const setSelectedCity = (city : City) => {dispatch(setActiveCity(city));};
   return (
     <>
       <div style={{display: 'none'}}>
@@ -47,7 +47,7 @@ function MainScreen(): JSX.Element {
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
-            <ListCities setSelectedCityHandler={setSelectedCityHandler} activeCity={activeCity}/>
+            <ListCities setSelectedCity={setSelectedCity} activeCity={activeCity}/>
           </div>
           <div className="cities">
             <div className="cities__places-container container">

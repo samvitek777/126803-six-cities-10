@@ -1,6 +1,6 @@
-import './spinner.css';
+import './loading-screen.css';
 
-function LoadingSpinner(): JSX.Element {
+function LoadingScreen(): JSX.Element {
   return (
     <div className="spinner-container">
       <div className="loading-spinner">
@@ -9,4 +9,4 @@ function LoadingSpinner(): JSX.Element {
   );
 }
 
-export default LoadingSpinner;
+export default LoadingScreen;

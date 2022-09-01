@@ -35,22 +35,5 @@ export type Offer = {
   id: number;
 };
 
-export type CityPoint = {
-  title: string;
-  lat: number;
-  lng: number;
-  zoom: number;
-};
-
-export type Message = {
-  userName : string;
-  rating : number;
-  message : string;
-}
-
 export type Offers = Offer[];
-
-export type Points = Location[];
-
-export type Messages = Message[];
 

@@ -12,11 +12,11 @@ import {
   fetchHotelByIdNearbyAction
 } from '../store/api-actions';
 import {Comments} from '../types/comment';
-import HeaderScreen from '../components/header/header';
+import HeaderScreen from '../components/header-screen/header-screen';
 import {getComments, getNearby, getOffer} from '../store/app-data/selectors';
 import {getActiveCity} from '../store/app-process/selectors';
 import {getAuthorizationStatus} from '../store/user-process/selectors';
-import {AppRoute, AuthorizationStatus} from '../const';
+import {AppRoute, AuthorizationStatus, ratingNum} from '../const';
 
 function Room(): JSX.Element {
   const {id} = useParams();
@@ -26,7 +26,8 @@ function Room(): JSX.Element {
     dispatch(fetchHotelByIdAction(Number(id)));
     dispatch(fetchHotelByIdNearbyAction(Number(id)));
     dispatch(fetchCommentsByIdAction(Number(id)));
-  }, []);
+    window.scrollTo( 0, 0 );
+  }, [id]);
   const offer : Offer | undefined = useAppSelector(getOffer);
   const nearby : Offers = useAppSelector(getNearby);
   const comments : Comments = useAppSelector(getComments);
@@ -37,7 +38,7 @@ function Room(): JSX.Element {
   if(offer !== undefined){
     nearbyMap = [...nearby, offer];
   }
-  const addFavoriteHandler = () => {
+  const addFavorite = () => {
     if (authorizationStatus !== AuthorizationStatus.Auth){
       navigate(AppRoute.Login);
     }
@@ -91,7 +92,7 @@ function Room(): JSX.Element {
                   <h1 className="property__name">
                     {offer?.title}
                   </h1>
-                  <button className="property__bookmark-button button" type="button" onClick={addFavoriteHandler}>
+                  <button className="property__bookmark-button button" type="button" onClick={addFavorite}>
                     <svg className="property__bookmark-icon" width="31" height="33">
                       <use href="#icon-bookmark"></use>
                     </svg>
@@ -100,7 +101,7 @@ function Room(): JSX.Element {
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{width: `${(offer?.rating === undefined ? 0 : offer.rating) * 20}%`}}></span>
+                    <span style={{width: `${(offer?.rating === undefined ? 0 : offer.rating) * ratingNum}%`}}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="property__rating-value rating__value">{offer?.rating}</span>

@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import {User} from '../../types/comment';
 import {getAuthorizationStatus, getCurrentUser} from '../../store/user-process/selectors';
 import {getCountFavorites} from '../../store/app-data/selectors';
-import LogoScreen from '../logo/logo';
+import LogoScreen from '../logo-screen/logo-screen';
 
 function HeaderScreen(): JSX.Element {
   const dispatch = useAppDispatch();

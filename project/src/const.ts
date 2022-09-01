@@ -71,7 +71,6 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   HotelById = '/hotels',
-  Nearby = '/nearby',
   Comments = '/comments',
   Favorites = '/favorite',
   StatusFavorites = '/favorite',
@@ -87,7 +86,7 @@ export const MonthNames = ['January', 'February', 'March', 'April', 'May', 'June
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-export const Rating = [
+export const Ratings = [
   {
     star: 5,
     title: 'perfect'
@@ -109,5 +108,7 @@ export const Rating = [
     title: 'terribly'
   }
 ];
+
+export const ratingNum = 20;
 
 

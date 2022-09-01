@@ -1,6 +1,6 @@
 import {Offers} from '../types/offers';
 
-function filterSort(offers : Offers, activeFilter: string){
+function getSortOffers(offers : Offers, activeFilter: string){
   switch (activeFilter){
     case 'PriceLowToHigh':
       offers.sort((a, b) => (a.price - b.price));
@@ -14,4 +14,4 @@ function filterSort(offers : Offers, activeFilter: string){
   }
 }
 
-export default filterSort;
+export default getSortOffers;

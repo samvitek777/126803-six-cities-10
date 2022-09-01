@@ -1,5 +1,5 @@
 import {Comment} from '../../types/comment';
-import {MonthNames} from '../../const';
+import {MonthNames, ratingNum} from '../../const';
 
 type ReviewsItemProps = {
   comment: Comment;
@@ -20,7 +20,7 @@ function ReviewsItem({comment} : ReviewsItemProps): JSX.Element{
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `${(comment?.rating) * 20}%`}}></span>
+            <span style={{width: `${(comment?.rating) * ratingNum}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

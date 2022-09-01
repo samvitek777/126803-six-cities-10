@@ -2,6 +2,7 @@ import {Offer} from '../../types/offers';
 import {Link} from 'react-router-dom';
 import {fetchDeleteFavoritesAction} from '../../store/api-actions';
 import {useAppDispatch} from '../../hooks';
+import {ratingNum} from '../../const';
 
 type FavoritesCartProps = {
   offer: Offer,
@@ -9,7 +10,7 @@ type FavoritesCartProps = {
 
 function FavoritesCart({offer} : FavoritesCartProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const deleteFavoriteHandler = () => {
+  const deleteFavorite = () => {
     dispatch(fetchDeleteFavoritesAction(offer.id));
   };
   return (
@@ -26,7 +27,7 @@ function FavoritesCart({offer} : FavoritesCartProps): JSX.Element {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button" onClick={deleteFavoriteHandler}>
+          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button" onClick={deleteFavorite}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use href="#icon-bookmark"></use>
             </svg>
@@ -35,7 +36,7 @@ function FavoritesCart({offer} : FavoritesCartProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${offer.rating * 20}%`}}></span>
+            <span style={{width: `${offer.rating * ratingNum}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

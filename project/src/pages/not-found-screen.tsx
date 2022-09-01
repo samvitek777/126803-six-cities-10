@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import HeaderScreen from '../components/header/header';
+import HeaderScreen from '../components/header-screen/header-screen';
 
 function NotFoundScreen(): JSX.Element {
   return (

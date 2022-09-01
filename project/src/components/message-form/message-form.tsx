@@ -3,7 +3,7 @@ import ReviewsList from '../reviews-list/reviews-list';
 import {Comments} from '../../types/comment';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchAddCommentAction} from '../../store/api-actions';
-import {AuthorizationStatus, Rating} from '../../const';
+import {AuthorizationStatus, Ratings} from '../../const';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import {getIsCommentLoaded} from '../../store/app-data/selectors';
 import RatingStar from '../rating-star/rating-star';
@@ -22,7 +22,7 @@ function MessageForm({comments, hotelId} : MessageFormProps): JSX.Element {
     review: ''
   });
   const isSubmitDisabled = formData.review.length < 50 || formData.review.length > 300 || Number(formData.rating) === 0;
-  const updateStateHandle = (evt: ChangeEvent) => {
+  const updateState = (evt: ChangeEvent) => {
     const target = evt.target as HTMLInputElement;
     const {name, value} = target;
     setFormData({...formData, [name]: value});
@@ -44,10 +44,10 @@ function MessageForm({comments, hotelId} : MessageFormProps): JSX.Element {
           <label className="reviews__label form__label" htmlFor="review">Your review</label>
           <div className="reviews__rating-form form__rating">
             {
-              Rating.map((rating) => (<RatingStar key={rating.star} rating={rating} ratingStar={formData.rating} updateStateHandle={updateStateHandle}/>))
+              Ratings.map((rating) => (<RatingStar key={rating.star} rating={rating} ratingStar={formData.rating} updateState={updateState}/>))
             }
           </div>
-          <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={updateStateHandle} value={formData.review}>
+          <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" onChange={updateState} value={formData.review}>
           </textarea>
           <div className="reviews__button-wrapper">
             <p className="reviews__help">

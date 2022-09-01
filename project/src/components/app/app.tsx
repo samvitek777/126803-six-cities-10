@@ -7,7 +7,7 @@ import {AppRoute} from '../../const';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundScreen from '../../pages/not-found-screen';
 import {useAppSelector} from '../../hooks';
-import LoadingSpinner from '../loading-screen/spinner';
+import LoadingScreen from '../loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import {getLoadedDataStatus} from '../../store/app-data/selectors';
@@ -18,7 +18,7 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   if (isDataLoaded) {
     return (
-      <LoadingSpinner />
+      <LoadingScreen />
     );
   }
   return (

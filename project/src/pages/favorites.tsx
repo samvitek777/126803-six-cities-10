@@ -1,4 +1,4 @@
-import HeaderScreen from '../components/header/header';
+import HeaderScreen from '../components/header-screen/header-screen';
 import {Offers} from '../types/offers';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import {
@@ -7,7 +7,7 @@ import {
 } from '../store/app-data/selectors';
 import {Cities} from '../const';
 import FavoritesItems from '../components/favorites-items/favotites-items';
-import LoadingSpinner from '../components/loading-screen/spinner';
+import LoadingScreen from '../components/loading-screen/loading-screen';
 import {FavoritesOffers} from '../types/favorite';
 import {useEffect} from 'react';
 import {fetchFavoritesByIdAction} from '../store/api-actions';
@@ -25,7 +25,7 @@ function Favorites(): JSX.Element {
 
   if (isFavoriteLoaded) {
     return (
-      <LoadingSpinner />
+      <LoadingScreen />
     );
   }
 
